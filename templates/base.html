@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog item</title>
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}">Our blog</a></h1>
+    </header>
+    {% if user.is_authenticated %}
+        <p>Xush kelibsiz, {{ user.username }}</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Chiqib ketish</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Saytga kirish</a></p>
+        <p><a href="{% url 'signup' %}">Ro'yxatdan o'tish</a></p>
+    {% endif %}
+    <div>
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <footer>
+        <h2><a href="{% url 'post_new' %}">Yangi Post yozish</a></h2>
+    </footer>
+</body>
+</html>
